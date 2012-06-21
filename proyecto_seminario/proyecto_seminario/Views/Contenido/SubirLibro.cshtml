@@ -1,0 +1,31 @@
+﻿@model proyecto_seminario.Models.Libros
+
+@{
+    ViewBag.Title = "Publica tu libro";
+}
+
+
+<fieldset>
+    <legend>Subir libro</legend>
+    <form enctype="multipart/form-data" method="post" action="@Url.Action("SubirLibro")">
+ 
+
+    <table>
+        <tr><td>Titulo:</td><td>@Html.TextBoxFor(m => m.titulo)</td></tr>
+        <tr><td>Portada:</td><td><input type="file" name="portada" accept="image/jpg"/></td></tr>
+        <tr><td>Contenido:</td><td><input type="file" name="contenido"/></td></tr>
+        <tr><td>Descripcion:</td><td>@Html.TextAreaFor(m => m.descripcion)</td></tr>
+               
+        <tr><td>Categoria:</td><td>
+     
+        @Html.TextBoxFor(m=>m.categoria)
+        
+
+        </td></tr>
+        <tr><td>Autor:</td><td>@Html.TextBoxFor(m => m.autor)</td></tr>
+        <tr><td>Publicacion:</td><td>@Html.TextBoxFor(m => m.aniopublicacion)</td></tr>
+    </table>
+    <input type="submit" value="Siguiente"/>
+
+    </form>
+</fieldset>

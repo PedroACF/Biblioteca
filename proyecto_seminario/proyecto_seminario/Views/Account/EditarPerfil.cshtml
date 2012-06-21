@@ -1,0 +1,42 @@
+﻿@model proyecto_seminario.Models.Perfil
+
+@{
+    ViewBag.Title = "EditarPerfil";
+}
+
+
+
+<fieldset>
+   
+        <legend>@Html.ActionLink("Informacion de usuario", "Perfil")|@Html.ActionLink("Editar perfil", "EditarPerfil")|@Html.ActionLink("Contraseña", "ChangePassword")</legend>
+        <h2>Editar Perfil</h2>
+        <form enctype="multipart/form-data" method="post" action="@Url.Action("EditarPerfil")">
+       
+            <table>
+            <tr><td>Avatar:
+            </td><td><input type="file" name="avatar"/></td></tr>
+            <tr><td>
+            @Html.Label("Nickname:")</td><td>
+            @Html.TextBoxFor(m => m.nickname)</td>
+            </tr><tr><td>
+            @Html.Label("Apellido:")</td><td>
+            @Html.TextBoxFor(m => m.apellido)       </td>
+        </tr><tr><td>
+            @Html.Label("Nombre:")</td><td>
+            @Html.TextBoxFor(m => m.nombre)</td>
+            </tr><tr><td>
+            
+            @Html.Label("Mail:")</td><td>
+            @Html.TextBoxFor(m => m.mail)</td>
+            </tr><tr><td>
+            @Html.Label("Ubicacion:")</td><td>
+            @Html.TextBoxFor(m => m.ubicacion)</td>
+            </tr><tr><td>
+            @Html.Label("Intereses:")</td><td>
+            @Html.TextAreaFor(m => m.interes)</td>
+            </tr>
+            </table>
+            <input type="submit" value="Actualizar"/>
+         
+        </form>
+    </fieldset>

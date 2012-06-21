@@ -1,0 +1,36 @@
+﻿
+
+@{
+    ViewBag.Title = "Informacion de usuario";
+}
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+   
+        <legend>@Html.ActionLink("Informacion de usuario", "Perfil")|@Html.ActionLink("Editar perfil", "EditarPerfil")|@Html.ActionLink("Contraseña","ChangePassword")</legend>
+            <fieldset>
+                <legend>Perfil de usuario</legend>
+        
+                    <div class="Cuenta">
+                    <img src="@ViewBag.Avatar" alt="imagen" width="150"/>
+                    <table>
+                
+                        <tr><td>Username:</td><td>@ViewBag.nick </td></tr>
+                        <tr><td>Apellido:</td><td>@ViewBag.apellido </td></tr>
+                        <tr><td>Nombre:</td><td>@ViewBag.nombre</td></tr>
+                        <tr><td>E-Mail:</td><td>@ViewBag.mail </td></tr>
+                        <tr><td>Intereses:</td><td>@ViewBag.interes</td></tr>
+                        <tr><td>Ubicacion:</td><td>@ViewBag.ubicacion </td></tr>
+                        <tr><td>Karma:</td><td>@ViewBag.karma</td></tr>
+                    </table>
+                    </div>        
+            </fieldset>
+            <fieldset>
+                <legend>Mis publicaciones</legend>
+                Todas las publicaciones de este usuario
+            </fieldset>
+
+    </fieldset>
+ 
+}

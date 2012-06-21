@@ -1,0 +1,207 @@
+﻿
+@{
+    ViewBag.Title = "Pagina principal";
+}
+
+
+              				
+				<div id="cuerpo">
+                   
+					<h1 align ="center">Libros mas recientes</h1>
+					<hr/>
+                   @foreach (var item in @ViewBag.con)
+                   {
+                    <div id="recuadro">
+                        <div id="usuario">
+                            Publicado por:<br/>
+                            <img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/><br/>
+                            Karma: @item.Karma
+                        
+                        </div>
+                        @{
+                            string x = item.Titulo;
+                            int y = item.IdContenido;
+                            string aux = "../Contenido/VistaLibro/" + y;
+                        }
+                        @Html.ActionLink(x, "../Contenido/VistaLibro", new { id = y })
+                        <br/>
+                        <div id="mas_info">
+                            Me gusta:@foreach(var v in @ViewBag.Gusta){
+                                         if (v.IdPub == y)
+                                         {
+                                            @v.cantidad
+                                         }
+                            }
+                        </div>
+                            <ul class="cosa">
+						        <li> <div id="imagen">
+                                    <a href="@aux"><img src="@item.Portada" alt="imagen" width="80" height="110"/></a>
+                        </div></li>
+                        </ul>
+						@item.Descripcion
+						<div id="limpiador">
+                        </div>
+                        </div>
+					<hr/>
+                  } 
+                  <h1 align="center">Articulos mas recientes</h1>
+                  @foreach (var item in @ViewBag.art){ 
+                     <div id="recuadro">
+                         <div id="usuario">
+                             Publicado por:<br/>
+                             <img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/><br/>
+                             Karma: @item.Karma
+                         </div>
+                         @{
+                            string x = item.Titulo;
+                            int y = item.IdContenido;
+                            string aux = "../Contenido/DetallePublicacion/" + y;
+                         }
+                         @Html.ActionLink(x, "../Contenido/DetallePublicacion", new { id = y })
+                         <br/>
+                         <div id="mas_info">
+                            Categorias:<br/>
+                            
+                            @foreach(var v in ViewBag.miscat){
+                                int idcont = v.IdContenido;
+                                if(idcont==y) {
+                                    <text> @v.Nombre<br/></text>
+                                }
+                            }
+                            
+                            Me gusta: @foreach(var v in @ViewBag.Gusta){
+                                          if (v.IdPub == y)
+                                          {
+                                    @v.cantidad
+                                          }
+                            }
+                         </div>
+                         @item.Descripcion
+						 <div id="limpiador">
+                         </div>
+                       </div>
+					<hr/>
+                  }
+                   <h1 align="center">Tutoriales mas recientes</h1>
+                   @foreach (var item in @ViewBag.tuto)
+                   { 
+                     <div id="recuadro">
+                         <div id="usuario">
+                             Publicado por:<br/>
+                             <img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/><br/>
+                             Karma: @item.Karma
+                         </div>
+                         @{
+                       string x = item.Titulo;
+                       int y = item.IdContenido;
+                       string aux = "../Contenido/DetallePublicacion/" + y;
+                         }
+                         @Html.ActionLink(x, "../Contenido/DetallePublicacion", new { id = y })
+                         <br/>
+                         <div id="mas_info">
+                            Categorias:<br/>
+                           
+                            @foreach (var v in ViewBag.miscat)
+                            {
+                                int idcont = v.IdContenido;
+                                if (idcont == y)
+                                {
+                                   <text> @v.Nombre<br/></text>
+                                }
+                            }
+                            
+                            Me gusta: 
+                            @foreach(var v in @ViewBag.Gusta){
+                                if (v.IdPub == y)
+                                {
+                                    @v.cantidad
+                                }
+                            }
+                         </div>
+                         @item.Descripcion
+						 <div id="limpiador">
+                         </div>
+                       </div>
+					<hr/>
+                   }
+                   <h1 align="center">Cursos mas recientes</h1>
+					@foreach (var item in @ViewBag.curso)
+     { 
+                     <div id="recuadro">
+                         <div id="usuario">
+                             Publicado por:<br/>
+                             <img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/><br/>
+                             Karma: @item.Karma
+                         </div>
+                         @{
+                             string x = item.Titulo;
+                                int y = item.IdContenido;
+                                string aux = "../Contenido/DetallePublicacion/" + y;
+                         }
+                         @Html.ActionLink(x, "../Contenido/DetallePublicacion", new { id = y })
+                         <br/>
+                         <div id="mas_info">
+                            Categorias:<br/>
+                           
+                            @foreach (var v in ViewBag.miscat)
+                            {
+                                int idcont = v.IdContenido;
+                                if (idcont == y)
+                                {
+                                   <text> @v.Nombre<br/></text>
+                                }
+                            }
+                           
+                            Me gusta: @foreach(var v in @ViewBag.Gusta){
+                                          if (v.IdPub == y)
+                                          {
+                                                @v.cantidad
+                                          }
+                            }
+                         </div>
+                         @item.Descripcion
+						 <div id="limpiador">
+                         </div>
+                       </div>
+					<hr/>
+                   }
+					<div id="navabajo">
+						<a href="#">Volver</a> |
+						<a href="#">Portada</a> 
+					</div>
+				</div> 
+				<div id="lateral">
+					<h2 class="titlat">Buscar</h2>
+						<div id="fbuscar" class="cuerpolateral">
+						<form name="formulario" action="">
+							<div id="campotexto"><input type="text" name="criterio" /></div>
+							<div id="botonbuscar"><input type="image" src="../go.gif"  /></div>
+							<div class="radio"><input type="radio" name="op" value="1" /> En la Web</div>
+							<div class="radio"><input type="radio" name="op" value="2" /> En internet</div>
+						</form>
+						</div>
+					<div id="registro" class="cuerpolateral">
+                        @if (!Request.IsAuthenticated)
+                        {
+						    <text> @Html.ActionLink("Registrese con nosotros", "../Account/Register") y obtenga muchas ventajas.</text>
+                        }
+					</div> 
+					<h2 class="titlat">Categoria</h2>
+					<div id="otras" class="cuerpolateral">
+					<ul>
+					@foreach (var i in @ViewBag.catego)
+     {
+
+         string cad = i.Nombre;
+                            
+                        <li>    @Html.ActionLink(cad, "Index", new { id = @i.Id_cat })</li>
+         
+                            
+     }
+                     <li>@Html.ActionLink("Todos", "Index", new { id = 0 })</li>
+					</ul>
+					</div> 
+				</div>
+				
+
+

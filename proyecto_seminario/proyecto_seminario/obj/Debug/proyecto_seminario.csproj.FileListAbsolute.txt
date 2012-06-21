@@ -1,0 +1,7 @@
+E:\seminario\proyecto_seminario\proyecto_seminario\bin\proyecto_seminario.dll
+E:\seminario\proyecto_seminario\proyecto_seminario\bin\proyecto_seminario.pdb
+E:\seminario\proyecto_seminario\proyecto_seminario\bin\EntityFramework.dll
+E:\seminario\proyecto_seminario\proyecto_seminario\bin\EntityFramework.xml
+E:\seminario\proyecto_seminario\proyecto_seminario\obj\Debug\ResolveAssemblyReference.cache
+E:\seminario\proyecto_seminario\proyecto_seminario\obj\Debug\proyecto_seminario.dll
+E:\seminario\proyecto_seminario\proyecto_seminario\obj\Debug\proyecto_seminario.pdb

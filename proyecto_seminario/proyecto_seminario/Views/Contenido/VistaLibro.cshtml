@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Documento";
+}
+
+<h2 align="center">@ViewBag.titulo</h2>
+<div id="user">
+    Publicado por:<br/>
+    <img src="../@ViewBag.avatar" alt="avatar de usuario" width="160" height="70"/><br/>
+    Karma: @ViewBag.karma
+
+    @foreach (var v in ViewBag.listas) {
+        if (ViewBag.titulo != v.Titulo)
+        {
+            string x = @v.Titulo;
+            int y = @v.IdContenido;
+            <div id="recuadro">
+            @if (v.Tipo == "Libro")
+            {
+                @Html.ActionLink(x, "VistaLibro", new { id = y })
+            }
+            else
+            {
+                @Html.ActionLink(x, "DetallePublicacion", new { id = y })
+            }
+            <br/>@v.Descripcion
+        
+            </div>
+        }
+    }
+</div>
+
+<div id="valor">
+    @if(Request.IsAuthenticated){
+        
+        if(ViewBag.cosa=="0"){
+            string val = "../Gusta/"+ViewBag.id;
+                <a href="@val">Me Gusta<img src="/Content/megusta.jpg" alt="me gusta" height="25"/></a>
+        }else{
+            string val = "../NoGusta/" + ViewBag.id;
+                <a href="@val">Ya no me gusta<img src="/Content/nomegusta.png" alt="ya no me gusta" height="25"/></a>
+        }
+     }
+    <table>
+        <tr><td>Descripcion: </td><td>@ViewBag.desc</td></tr>
+        <tr><td>Autor: </td><td>@ViewBag.autor</td></tr>
+        <tr><td>Año:</td><td>@ViewBag.fecha</td></tr>
+    </table>
+    <br/>
+    <embed src="@ViewBag.tema"  width="650" height="500" border="2"></embed>
+    <br/>
+    Comentarios: @ViewBag.comcont<br/>
+    <table border="1" width="650">
+    @foreach (var v in ViewBag.comentario)
+    {
+        DateTime dt=@v.Fecha;
+       
+        string fec = dt.ToString().Substring(0, 8);
+        
+        <tr><td>
+            Publicado en fecha: @fec<br/>
+            @v.Texto
+        </td></tr>
+    }
+    </table>
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("Comentar","Contenido"))
+        { 
+            <text>Deja tu comentario:<br/></text>
+            <input type="hidden" name="id" value="@ViewBag.id"/>
+            <textarea id="coment" name="coment" rows="5" cols="40" ></textarea>
+            <br/>
+            <input type="submit" value="Comentar"/>
+        }
+    }
+</div>  
