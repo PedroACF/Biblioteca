@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Busqueda";
+}
+
+<h2>Se han encontrado @ViewBag.con resultados</h2>
+<div id="lateral">
+					<h2 class="titlat">Buscar</h2>
+						<div id="fbuscar" class="cuerpolateral">
+						@using (Html.BeginForm("busqueda","Home"))  {
+							<div id="campotexto"><input type="text" name="criterio" value="criterio"/></div>
+                            <div id="campotexto"><select name="porque"><option value="*">Todos</option><option value="Articulo">Articulo</option><option value="Curso">Curso</option><option value="Libro">Libro</option><option value="Tutorial">Tutorial</option></select></div>
+							<div id="botonbuscar"><button name="miboton" type="submit"><img src="/go.gif" alt="algo"/></button></div>
+							
+      }
+						</div>
+    </div>
+@foreach(var v in @ViewBag.lista){
+    string xx = v.Titulo;
+    string x=ViewBag.dato;
+    string y="<span style='background-color: #ff6600;'>"+x+"</span>";
+    string aux = v.Descripcion;
+    aux = aux.Replace(x, y);
+    int i = v.IdContenido;
+    <div id="cuerpo">
+    <div id="recuadro">
+        @if (v.Tipo == "Libro")
+        {
+        @Html.ActionLink(xx, "../Contenido/VistaLibro", new { id = i })
+        }
+        else
+        { 
+            @Html.ActionLink(xx, "../Contenido/DetallePublicacion", new { id = i })
+        }
+        <br/>
+        @Html.Raw(@aux)
+    </div>
+    </div>
+    
+}
+
+           

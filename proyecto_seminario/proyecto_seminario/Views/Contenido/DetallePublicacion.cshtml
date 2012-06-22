@@ -6,7 +6,7 @@
 <h2>@ViewBag.titulo</h2>
 <div id="user">
     Publicado por:<br/>
-    <img src="../@ViewBag.avatar" alt="avatar de usuario" width="160" height="70"/><br/>
+    <a href="/Account/perfil2/@ViewBag.userid"><img src="../@ViewBag.avatar" alt="avatar de usuario" width="160" height="70"/></a><br/>
     Karma: @ViewBag.karma
 
     @foreach (var v in ViewBag.listas) {
@@ -30,7 +30,7 @@
     }
 </div>
 
-
+<div id="cuerpo">
 <div id="valor">
     @if (Request.IsAuthenticated) { 
     int i=ViewBag.con;
@@ -67,11 +67,11 @@
         { 
             <text>Comentario:<br/></text>
             <input type="hidden" name="id" value="@ViewBag.con"/>
-            <textarea id="coment" name="coment" rows="10" cols="20"></textarea>
+            <textarea id="coment" name="coment" rows="5" cols="70"></textarea>
             <br/>
             <input type="submit" value="Comentar"/>
         }
     }
+    </div>
  </div>
-
 

@@ -50,6 +50,42 @@ namespace proyecto_seminario.Controllers
             ViewBag.interes = fila.ToArray()[0].interes;
             ViewBag.ubicacion = fila.ToArray()[0].ubicacion;
             ViewBag.karma = fila.ToArray()[0].karma;
+            ViewBag.coment = (from p in db.Comentarios where p.Id_Us == id select p).Count();
+            ViewBag.gusta = (from p in db.Cant_Gustas select p).ToList();
+            ViewBag.publicacion=(from p in db.Contenidos where p.Id_User==id select p).ToList();
+            return View();
+        }
+        public ActionResult Perfil2(Guid id)
+        {
+            BibliotecaDataContext db = new BibliotecaDataContext();
+         
+
+            var fila = from f1 in db.aspnet_Memberships
+                       join f2 in db.Perfil_Usuarios on f1.UserId equals f2.Id_User
+                       where f1.UserId == id
+                       select new
+                       {
+                           avatar = f2.Avatar,
+                           nick = f2.Nickname,
+                           apellido = f2.Apellidos,
+                           nombre = f2.Nombre,
+                           mail = f1.Email,
+                           interes = f2.Intereses,
+                           ubicacion = f2.Ubicacion,
+                           karma = f2.Karma
+                       };
+
+            ViewBag.Avatar = fila.ToArray()[0].avatar;
+            ViewBag.nick = fila.ToArray()[0].nick;
+            ViewBag.apellido = fila.ToArray()[0].apellido;
+            ViewBag.nombre = fila.ToArray()[0].nombre;
+            ViewBag.mail = fila.ToArray()[0].mail;
+            ViewBag.interes = fila.ToArray()[0].interes;
+            ViewBag.ubicacion = fila.ToArray()[0].ubicacion;
+            ViewBag.karma = fila.ToArray()[0].karma;
+            ViewBag.coment = (from p in db.Comentarios where p.Id_Us == id select p).Count();
+            ViewBag.gusta = (from p in db.Cant_Gustas select p).ToList();
+            ViewBag.publicacion = (from p in db.Contenidos where p.Id_User == id select p).ToList();
             return View();
         }
         public ActionResult EditarPerfil(){
@@ -132,6 +168,7 @@ namespace proyecto_seminario.Controllers
                               };
 
                     Session["userid"] = fila.ToArray()[0].ID;
+                    ViewBag.id = (Guid)Session["userid"];
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))

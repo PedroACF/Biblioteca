@@ -17,6 +17,7 @@ body{
 	height : 106px;
 	width: 850px;
 	margin: auto;
+	background: url("/micabecera.jpg") repeat;
 }
 #cabecera img{
 	height : 106px;

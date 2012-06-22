@@ -446,6 +446,8 @@
     <Content Include="Views\Contenido\DetalleLibro.cshtml" />
     <Content Include="Views\Contenido\Publicar.cshtml" />
     <Content Include="Views\Contenido\DetallePublicacion.cshtml" />
+    <Content Include="Views\Home\Busqueda.cshtml" />
+    <Content Include="Views\Account\Perfil2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\Biblioteca.dbml.layout">

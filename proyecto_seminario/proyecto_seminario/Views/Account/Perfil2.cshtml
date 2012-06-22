@@ -1,19 +1,12 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "Informacion de usuario";
 }
 
-@using (Html.BeginForm())
-{
-    <fieldset>
-   
-        <legend>@Html.ActionLink("Informacion de usuario", "Perfil")|@Html.ActionLink("Editar perfil", "EditarPerfil")|@Html.ActionLink("Contraseña","ChangePassword")</legend>
             <fieldset>
                 <legend>Perfil de usuario</legend>
         
                     <div class="Cuenta">
-                    <img src="@ViewBag.Avatar" alt="imagen" width="150"/>
+                    <img src="/@ViewBag.Avatar" alt="imagen" width="150"/>
                     <table>
                 
                         <tr><td>Username:</td><td>@ViewBag.nick </td></tr>
@@ -32,7 +25,7 @@
             <fieldset>
                 <legend>Mis publicaciones</legend>
                 <table>
-                <tr><th>| Titulo |</th><th>Tipo |</th><th>K. por publicar |</th><th>K. Me Gusta |</th><th>Karma Total |</th></tr>
+                <tr><th>| Titulo </th><th>|Tipo </th><th>|K. por publicar </th><th>|K. Me Gusta </th><th>|Karma Total|</th></tr>
                 <tr><td></td><td></td><td></td><td></td><td></td></tr>
                 @foreach(var v in @ViewBag.publicacion){
                     int i = v.IdContenido;
@@ -61,6 +54,4 @@
             
             </fieldset>
 
-    </fieldset>
  
-}

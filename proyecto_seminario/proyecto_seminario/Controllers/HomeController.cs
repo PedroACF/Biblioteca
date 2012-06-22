@@ -20,6 +20,7 @@ namespace proyecto_seminario.Controllers
             ViewBag.catego = lista;
             ViewBag.miscat = (from t in db.ListaCategos select t).ToList();
             ViewBag.Gusta = (from t in db.Cant_Gustas select t).ToList();
+            ViewBag.contenido = (from t in db.Contenidos select t).ToList();
             if (id == 0)
             {
                 ViewBag.con = (from f in db.VistaGeneralLibros orderby f.IdContenido descending select f).ToList();
@@ -40,6 +41,24 @@ namespace proyecto_seminario.Controllers
 
         public ActionResult About()
         {
+            return View();
+        }
+        public ActionResult Busqueda(FormCollection f) {
+            string criterio = f["criterio"];
+            string filtro = f["porque"];
+            ViewBag.dato = criterio;
+            BibliotecaDataContext db = new BibliotecaDataContext();
+            if (filtro == "*")
+            {
+                ViewBag.lista = (from p in db.Contenidos where p.Descripcion.Contains(criterio) select p).ToList();
+                ViewBag.con = (from p in db.Contenidos where p.Descripcion.Contains(criterio) select p).Count();
+            }
+            else
+            {
+                ViewBag.lista = (from p in db.Contenidos where p.Descripcion.Contains(criterio) && p.Tipo == filtro select p).ToList();
+                ViewBag.con = (from p in db.Contenidos where p.Descripcion.Contains(criterio) && p.Tipo == filtro select p).Count();
+            }
+            
             return View();
         }
     }

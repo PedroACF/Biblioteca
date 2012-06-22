@@ -11,27 +11,43 @@
 					<hr/>
                    @foreach (var item in @ViewBag.con)
                    {
-                    <div id="recuadro">
-                        <div id="usuario">
-                            Publicado por:<br/>
-                            <img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/><br/>
-                            Karma: @item.Karma
-                        
-                        </div>
-                        @{
+                       
+                       
                             string x = item.Titulo;
                             int y = item.IdContenido;
                             string aux = "../Contenido/VistaLibro/" + y;
-                        }
+                            int cont= 0;
+                            Guid idus = Guid.Empty;
+                            foreach (var j in ViewBag.contenido) {
+                                if (j.IdContenido == y) {
+                                    idus = j.Id_User;
+                                }
+                            }
+                        
+                    <div id="recuadro">
+                        <div id="usuario">
+                            Publicado por:<br/>
+                            <a href="Account/Perfil2/@idus"><img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
+                            Karma: @item.Karma
+                        
+                        </div>
+                        
                         @Html.ActionLink(x, "../Contenido/VistaLibro", new { id = y })
                         <br/>
                         <div id="mas_info">
                             Me gusta:@foreach(var v in @ViewBag.Gusta){
-                                         if (v.IdPub == y)
-                                         {
-                                            @v.cantidad
-                                         }
-                            }
+                                       
+                                          if (v.IdPub == y)
+                                          {
+                                              cont++;
+                                                @v.cantidad
+                                          }
+                                          
+                                     }
+                                     @if (cont == 0)
+                                      { 
+                                            @cont
+                                      }
                         </div>
                             <ul class="cosa">
 						        <li> <div id="imagen">
@@ -43,38 +59,59 @@
                         </div>
                         </div>
 					<hr/>
-                  } 
+                   } 
                   <h1 align="center">Articulos mas recientes</h1>
-                  @foreach (var item in @ViewBag.art){ 
+                  @foreach (var item in @ViewBag.art)
+                  { 
+                      
+                          string x = item.Titulo;
+                                int y = item.IdContenido;
+                            string aux = "../Contenido/DetallePublicacion/" + y;
+                            int cont = 0;
+                            Guid idus = Guid.Empty;
+                            foreach (var j in ViewBag.contenido)
+                            {
+                                if (j.IdContenido == y)
+                                {
+                                    idus = j.Id_User;
+                                }
+                            }
+                        
                      <div id="recuadro">
                          <div id="usuario">
                              Publicado por:<br/>
-                             <img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/><br/>
+                             <a href="Account/Perfil2/@idus"><img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
                              Karma: @item.Karma
                          </div>
-                         @{
-                            string x = item.Titulo;
-                            int y = item.IdContenido;
-                            string aux = "../Contenido/DetallePublicacion/" + y;
-                         }
+                        
                          @Html.ActionLink(x, "../Contenido/DetallePublicacion", new { id = y })
                          <br/>
                          <div id="mas_info">
                             Categorias:<br/>
                             
-                            @foreach(var v in ViewBag.miscat){
+                            @foreach (var v in ViewBag.miscat)
+                            {
                                 int idcont = v.IdContenido;
-                                if(idcont==y) {
+                                if (idcont == y)
+                                {
                                     <text> @v.Nombre<br/></text>
                                 }
                             }
                             
-                            Me gusta: @foreach(var v in @ViewBag.Gusta){
+                            Me gusta: @foreach (var v in @ViewBag.Gusta)
+                                      {
+                                         
                                           if (v.IdPub == y)
                                           {
-                                    @v.cantidad
+                                              cont++;
+                                                @v.cantidad
                                           }
-                            }
+                                          
+                                      }
+                                      @if (cont == 0)
+                                      { 
+                                            @cont
+                                      }
                          </div>
                          @item.Descripcion
 						 <div id="limpiador">
@@ -85,17 +122,28 @@
                    <h1 align="center">Tutoriales mas recientes</h1>
                    @foreach (var item in @ViewBag.tuto)
                    { 
+                       
+                      
+                            string x = item.Titulo;
+                            int y = item.IdContenido;
+                             string aux = "../Contenido/DetallePublicacion/" + y;
+                             int cont = 0;
+                             Guid idus = Guid.Empty;
+                             foreach (var j in ViewBag.contenido)
+                             {
+                                 if (j.IdContenido == y)
+                                 {
+                                     idus = j.Id_User;
+                                 }
+                             }
+                        
                      <div id="recuadro">
                          <div id="usuario">
                              Publicado por:<br/>
-                             <img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/><br/>
+                             <a href="Account/Perfil2/@idus"><img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
                              Karma: @item.Karma
                          </div>
-                         @{
-                       string x = item.Titulo;
-                       int y = item.IdContenido;
-                       string aux = "../Contenido/DetallePublicacion/" + y;
-                         }
+                         
                          @Html.ActionLink(x, "../Contenido/DetallePublicacion", new { id = y })
                          <br/>
                          <div id="mas_info">
@@ -111,11 +159,19 @@
                             }
                             
                             Me gusta: 
-                            @foreach(var v in @ViewBag.Gusta){
+                            @foreach (var v in @ViewBag.Gusta)
+                            {
+                                
                                 if (v.IdPub == y)
                                 {
-                                    @v.cantidad
+                                    cont++;
+                                                @v.cantidad
                                 }
+                                
+                            }
+                            @if (cont == 0)
+                            { 
+                                            @cont
                             }
                          </div>
                          @item.Descripcion
@@ -127,17 +183,27 @@
                    <h1 align="center">Cursos mas recientes</h1>
 					@foreach (var item in @ViewBag.curso)
      { 
-                     <div id="recuadro">
+                     
+                        
+                             string x = item.Titulo;
+                            int y = item.IdContenido;
+                                string aux = "../Contenido/DetallePublicacion/" + y;
+                            int cont = 0;
+                            Guid idus = Guid.Empty;
+                            foreach (var j in ViewBag.contenido)
+                            {
+                                if (j.IdContenido == y)
+                                {
+                                    idus = j.Id_User;
+                                }
+                            }
+                         
+                         <div id="recuadro">
                          <div id="usuario">
                              Publicado por:<br/>
-                             <img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/><br/>
+                             <a href="Account/Perfil2/@idus"><img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
                              Karma: @item.Karma
                          </div>
-                         @{
-                             string x = item.Titulo;
-                                int y = item.IdContenido;
-                                string aux = "../Contenido/DetallePublicacion/" + y;
-                         }
                          @Html.ActionLink(x, "../Contenido/DetallePublicacion", new { id = y })
                          <br/>
                          <div id="mas_info">
@@ -152,19 +218,27 @@
                                 }
                             }
                            
-                            Me gusta: @foreach(var v in @ViewBag.Gusta){
+                            Me gusta: @foreach (var v in @ViewBag.Gusta)
+                                      {
+                                          
                                           if (v.IdPub == y)
                                           {
+                                              cont++;
                                                 @v.cantidad
                                           }
-                            }
+                                        
+                                      }
+                                      @if (cont == 0)
+                                          { 
+                                            @cont
+                                          }
                          </div>
                          @item.Descripcion
 						 <div id="limpiador">
                          </div>
                        </div>
 					<hr/>
-                   }
+     }
 					<div id="navabajo">
 						<a href="#">Volver</a> |
 						<a href="#">Portada</a> 
@@ -173,12 +247,13 @@
 				<div id="lateral">
 					<h2 class="titlat">Buscar</h2>
 						<div id="fbuscar" class="cuerpolateral">
-						<form name="formulario" action="">
-							<div id="campotexto"><input type="text" name="criterio" /></div>
-							<div id="botonbuscar"><input type="image" src="../go.gif"  /></div>
-							<div class="radio"><input type="radio" name="op" value="1" /> En la Web</div>
-							<div class="radio"><input type="radio" name="op" value="2" /> En internet</div>
-						</form>
+						@using (Html.BeginForm("busqueda", "Home"))
+      {
+							<div id="campotexto"><input type="text" name="criterio" value="busqueda"/></div>
+                            <div id="campotexto"><select name="porque"><option value="*">Todos</option><option value="Articulo">Articulo</option><option value="Curso">Curso</option><option value="Libro">Libro</option><option value="Tutorial">Tutorial</option></select></div>
+							<div id="botonbuscar"><button name="miboton" type="submit"><img src="/go.gif" alt="algo"/></button></div>
+							
+      }
 						</div>
 					<div id="registro" class="cuerpolateral">
                         @if (!Request.IsAuthenticated)

@@ -126,7 +126,7 @@ namespace proyecto_seminario.Controllers
             ViewBag.comcont = (from p in db.Comentarios where p.Id_Cont == id select p).Count();
             ViewBag.comentario = (from p in db.Comentarios where p.Id_Cont == id select p).ToList();
             ViewBag.cosa = (from p in db.Gustas where p.Id_Us == ID && p.IdPub == id select p).Count().ToString();
-            
+            ViewBag.userid = ID;
             return View();
         }
       
@@ -200,6 +200,7 @@ namespace proyecto_seminario.Controllers
             var y = (from i in db.Perfil_Usuarios where i.Id_User == IDD select i).ToArray()[0];
             ViewBag.avatar = y.Avatar;
             ViewBag.karma = y.Karma;
+            ViewBag.userid = IDD;
             ViewBag.listas = (from i in db.Contenidos where i.Id_User == IDD select i).ToList();
             return View();
         }
@@ -223,6 +224,12 @@ namespace proyecto_seminario.Controllers
             db.SubmitChanges();
             ViewBag.comentario=(from p in db.Comentarios where p.Id_Cont==id select p).ToList();
             ViewBag.cosa = (from p in db.Gustas where p.Id_Us==ID && p.IdPub==id select p).Count().ToString();
+            Guid IDD = (Guid)(from p in db.Contenidos where p.IdContenido == id select p).ToArray()[0].Id_User;
+            var y = (from i in db.Perfil_Usuarios where i.Id_User == IDD select i).ToArray()[0];
+            ViewBag.avatar = y.Avatar;
+            ViewBag.karma = y.Karma;
+            ViewBag.userid = IDD;
+            ViewBag.listas = (from i in db.Contenidos where i.Id_User == IDD select i).ToList();
             return View();
         }
         public ActionResult Gusta(int id) {

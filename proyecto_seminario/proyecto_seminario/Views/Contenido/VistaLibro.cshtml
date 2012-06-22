@@ -5,7 +5,7 @@
 <h2 align="center">@ViewBag.titulo</h2>
 <div id="user">
     Publicado por:<br/>
-    <img src="../@ViewBag.avatar" alt="avatar de usuario" width="160" height="70"/><br/>
+    <a href="/Account/perfil2/@ViewBag.userid"><img src="../@ViewBag.avatar" alt="avatar de usuario" width="160" height="70"/></a><br/>
     Karma: @ViewBag.karma
 
     @foreach (var v in ViewBag.listas) {
