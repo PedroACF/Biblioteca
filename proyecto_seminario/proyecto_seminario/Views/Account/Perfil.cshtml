@@ -8,13 +8,13 @@
 {
     <fieldset>
    
-        <legend>@Html.ActionLink("Informacion de usuario", "Perfil")|@Html.ActionLink("Editar perfil", "EditarPerfil")|@Html.ActionLink("Contraseña","ChangePassword")</legend>
+        <legend>@Html.ActionLink("Informacion de usuario", "Perfil")|@Html.ActionLink("Editar perfil", "EditarPerfil")|@Html.ActionLink("Contraseña", "ChangePassword")</legend>
             <fieldset>
                 <legend>Perfil de usuario</legend>
         
                     <div class="Cuenta">
-                    <img src="@ViewBag.Avatar" alt="imagen" width="150"/>
-                    <table>
+                    <img src="/@ViewBag.Avatar" alt="imagen" width="150"/>
+                    <table id="itsthetable" >
                 
                         <tr><td>Username:</td><td>@ViewBag.nick </td></tr>
                         <tr><td>Apellido:</td><td>@ViewBag.apellido </td></tr>
@@ -27,17 +27,23 @@
                     </table>
                     </div>        
             </fieldset>
-            Karma total aportada por Comentarios:
-            @ViewBag.coment 
+            @{
+    double valo = ViewBag.coment;
+    valo = valo * 0.5;
+            }
+            Cantidad de comentarios realizados: @ViewBag.coment <br />
+            Karma total aportada por Comentarios: @valo;
             <fieldset>
                 <legend>Mis publicaciones</legend>
-                <table>
-                <tr><th>| Titulo |</th><th>Tipo |</th><th>K. por publicar |</th><th>K. Me Gusta |</th><th>Karma Total |</th></tr>
+                <table border="1" id="itsthetable" align="center">
+                <tr><th> Titulo </th><th>Tipo </th><th>K. por publicar </th><th>K. Me Gusta </th><th>Karma Total </th><th>Editar</th></tr>
                 <tr><td></td><td></td><td></td><td></td><td></td></tr>
-                @foreach(var v in @ViewBag.publicacion){
+                @foreach (var v in @ViewBag.publicacion)
+                {
                     int i = v.IdContenido;
                     string tit = v.Titulo;
                     int cont = 0;
+                    int n=0;
                     foreach (var val in ViewBag.gusta)
                     {
                         if (val.IdPub == i)
@@ -47,18 +53,82 @@
                     }
                     string ruta = "";
                     if (v.Tipo == "Libro")
+                    { 
+                        n=100;
+                    }
+                    if (v.Tipo == "Articulo")
+                    { 
+                        n=10;
+                    }
+                    if (v.Tipo == "Tutorial")
+                    {
+                        n = 50;
+                    }
+                    if (v.Tipo == "Curso")
+                    {
+                        n = 200;
+                    }
+                    if (v.Tipo == "Libro")
                     {
                         ruta = "../Contenido/VistaLibro";
                     }
-                    else {
+                    else
+                    {
                         ruta = "../Contenido/DetallePublicacion";
                     }
                     
-                    <tr><td>@Html.ActionLink(tit, ruta, new {id=i })</td><td>@v.Tipo</td><td>???</td><td>@cont</td><td>@cont</td></tr>
+                    <tr><td>@Html.ActionLink(tit, ruta, new { id = i })</td><td>@v.Tipo</td><td>
+                    @n
+                    </td><td>@cont</td><td>@(cont+n)</td>
+                    
+                    @if (v.Tipo == "Libro")
+                        {
+                                <td>@Html.ActionLink("Editar", "../Contenido/EdicionLibro", new { id = v.IdContenido })</td>
+                        }
+                        else
+                        {
+                                <td>@Html.ActionLink("Editar", "../Contenido/EdicionPublicacion", new { id = v.IdContenido })</td>
+                        }
+                    
+                    </tr>
                 }
                 </table>
             
             
+            </fieldset>
+            <fieldset>
+                <legend>Publicaciones aun no autorizadas</legend>
+                <table border="1" id="itsthetable" align="center">
+                <tr><th>Titulo</th><th>Estado</th><th>Observaciones</th><th>Acciones</th></tr>
+                @foreach (var v in ViewBag.publicacion2)
+                { 
+                    <tr><td>@v.Titulo</td>
+                    @{
+                    int est = v.estado;
+                    if (est == 2)
+                    { 
+                            <td>Observado</td>
+                            <td>@v.observaciones</td>
+                        if (v.Tipo == "Libro")
+                        {
+                                <td>@Html.ActionLink("Editar", "../Contenido/EdicionLibro", new { id = v.IdContenido })</td>
+                        }
+                        else
+                        {
+                                <td>@Html.ActionLink("Editar", "../Contenido/EdicionPublicacion", new { id = v.IdContenido })</td>
+                        }
+                    }
+                    else
+                    {
+                            <td>Inactivo</td>
+                            <td></td>
+                            <td></td>
+                    }
+                    }
+                    
+                    </tr>
+                }
+                </table>
             </fieldset>
 
     </fieldset>

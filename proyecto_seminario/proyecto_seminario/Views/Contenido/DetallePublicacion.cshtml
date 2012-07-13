@@ -2,11 +2,11 @@
     ViewBag.Title = "DetallePublicacion";
 }
 
-<h4>Detalle @ViewBag.tipo</h4>
-<h2>@ViewBag.titulo</h2>
-<div id="user">
+<h4 align="center">Detalle @ViewBag.tipo</h4>
+
+<div id="user" style="width:170px;">
     Publicado por:<br/>
-    <a href="/Account/perfil2/@ViewBag.userid"><img src="../@ViewBag.avatar" alt="avatar de usuario" width="160" height="70"/></a><br/>
+    <a href="/Account/perfil2/@ViewBag.userid"><img src="/@ViewBag.avatar" alt="avatar de usuario" width="160" height="70"/></a><br/>
     Karma: @ViewBag.karma
 
     @foreach (var v in ViewBag.listas) {
@@ -14,7 +14,7 @@
         {
             string x = @v.Titulo;
             int y = @v.IdContenido;
-            <div id="recuadro">
+            <div id="recuadro" >
             @if (v.Tipo == "Libro")
             {
                 @Html.ActionLink(x, "VistaLibro", new { id = y })
@@ -28,10 +28,13 @@
             </div>
         }
     }
+
 </div>
 
-<div id="cuerpo">
+<div id="cuerpo" style="border: solid 1px; width : 650px;">
+  <h2 align="center">@ViewBag.titulo</h2>
 <div id="valor">
+    
     @if (Request.IsAuthenticated) { 
     int i=ViewBag.con;
     if(ViewBag.cosa=="0"){
@@ -44,34 +47,52 @@
                 <a href="@val">Ya no me gusta<img src="/Content/nomegusta.png" alt="ya no me gusta" height="25"/></a>
     }
     }
+    <br/><b>A @ViewBag.gustas personas les gusta esto</b>
     <div id="contenido">
     @Html.Raw(ViewBag.contenido)
+    <hr />
    </div>
-    Comentarios: @ViewBag.comcont<br/>
-    <table border="1" width="650">
+   <div id="cuerpo">
+    <b>Cantidad de Comentarios:</b> @ViewBag.comcont<br/><br/>
+    
     @foreach (var v in ViewBag.comentario)
     {
         DateTime dt=@v.Fecha;
-       
-        string fec = dt.ToString().Substring(0, 8);
+        Guid usuario = (Guid)v.Id_Us;
         
-        <tr><td>
-            Publicado en fecha: @fec<br/>
+        string fec = dt.ToString().Substring(0, 8);
+        <div id="recuadro" style="width:600px;">
+        @foreach(var w in @ViewBag.listauser){
+            if(w.Id_User==usuario){
+                <div id="usuario">
+                            <b>Publicado por:</b><br/>
+                            <a href="/Account/Perfil2/@w.Id_User"><img src="/@w.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
+                            <b>Karma:</b> @w.Karma
+                        
+                </div>
+            }
+
+        }
+            <b>Publicado en fecha: @fec</b><br/>
             @v.Texto
-        </td></tr>
+                    <div id="limpiador">
+                        </div>
+        </div>
     }
-    </table>
+    
     @if (Request.IsAuthenticated)
     {
         using (Html.BeginForm())
         { 
-            <text>Comentario:<br/></text>
+            <br />
+            <text><h3>@Html.Label("Deja tu comentario:")</h3><br/></text>
             <input type="hidden" name="id" value="@ViewBag.con"/>
             <textarea id="coment" name="coment" rows="5" cols="70"></textarea>
             <br/>
             <input type="submit" value="Comentar"/>
         }
     }
+    </div>
     </div>
  </div>
 

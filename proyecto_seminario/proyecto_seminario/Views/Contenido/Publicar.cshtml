@@ -47,21 +47,22 @@
     });    
 </script> 
 
-<h2>Publicar @ViewBag.titulo</h2>
+
 <div id="valor">
+<h2>Publicar @ViewBag.titulo</h2>
 @using (Html.BeginForm())
 {
     
     <input type="hidden" name="tipo" value="@ViewBag.titulo"/>
     <table>
         
-        <tr><td>Titulo: </td><td>@Html.TextBoxFor(m=>m.titulo)</td></tr>
-        <tr><td>Categoria: </td><td>@Html.TextBoxFor(m=>m.categoria)</td></tr> 
-        <tr><td>Descripcion: </td><td>@Html.TextAreaFor(m=>m.descripcion)</td></tr>
+        <tr><td><b>Titulo:</b> </td><td>@Html.TextBoxFor(m => m.titulo)</td></tr>
+        <tr><td><b>Categoria:</b> </td><td>@Html.TextBoxFor(m=>m.categoria)</td></tr> 
+        <tr><td><b>Descripcion:</b> </td><td>@Html.TextAreaFor(m=>m.descripcion)</td></tr>
         
     
     </table>
-    <textarea id="elm3" name="elm3" rows="15" cols="90" style="width: 90%"> 
+    <textarea id="ckeditor" class="ckeditor" name="ckeditor"> 
 
     </textarea>
     <br/>

@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "RevisionPublicacion";
+}
+<div id="cuerpo" style="border: solid 1px; width : 640px;">
+<h2 align="center">@ViewBag.titulo</h2>
+@Html.Raw(ViewBag.contenido)
+</div>
+<div id="user">
+    <a href="/Contenido/Bueno/@ViewBag.con"><img src="/contenidos/bien.jpg" alt="bueno" width="120"/></a>
+    @using (Html.BeginForm("Observar","Contenido")) { 
+        <h3>@Html.Label("Observaciones")</h3>
+        <input type="hidden" name="idcont" value="@ViewBag.con" />
+        @Html.TextArea("observacion", new { columns="18"})<br />
+        <input type="submit" value="enviar revision"/>
+    }
+</div>
+

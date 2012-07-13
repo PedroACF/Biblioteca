@@ -3,9 +3,9 @@
 }
 
 <h2 align="center">@ViewBag.titulo</h2>
-<div id="user">
+<div id="user" style="width:170px;">
     Publicado por:<br/>
-    <a href="/Account/perfil2/@ViewBag.userid"><img src="../@ViewBag.avatar" alt="avatar de usuario" width="160" height="70"/></a><br/>
+    <a href="/Account/perfil2/@ViewBag.userid"><img src="/@ViewBag.avatar" alt="avatar de usuario" width="160" height="70"/></a><br/>
     Karma: @ViewBag.karma
 
     @foreach (var v in ViewBag.listas) {
@@ -29,42 +29,66 @@
     }
 </div>
 
+<div id="cuerpo" style="border: solid 1px; width : 650px;">
 <div id="valor">
     @if(Request.IsAuthenticated){
-        
+       
         if(ViewBag.cosa=="0"){
             string val = "../Gusta/"+ViewBag.id;
                 <a href="@val">Me Gusta<img src="/Content/megusta.jpg" alt="me gusta" height="25"/></a>
+                
         }else{
             string val = "../NoGusta/" + ViewBag.id;
                 <a href="@val">Ya no me gusta<img src="/Content/nomegusta.png" alt="ya no me gusta" height="25"/></a>
         }
-     }
+        <br/><a href="@ViewBag.tema">Descargar este libro</a>
+    }
+     <br/><b>A @ViewBag.gustas personas les gusta esto</b>
+     @{
+         string B = ViewBag.fecha.ToString();
+         B = B.Substring(6, 4);   
+      }
     <table>
-        <tr><td>Descripcion: </td><td>@ViewBag.desc</td></tr>
-        <tr><td>Autor: </td><td>@ViewBag.autor</td></tr>
-        <tr><td>Año:</td><td>@ViewBag.fecha</td></tr>
+        <tr><td><b>Descripcion:</b> </td><td>@ViewBag.desc</td></tr>
+        <tr><td><b>Autor: </b></td><td>@ViewBag.autor</td></tr>
+        <tr><td><b>Año:</b></td><td>@B</td></tr>
     </table>
     <br/>
-    <embed src="@ViewBag.tema"  width="650" height="500" border="2"></embed>
+    <embed src="@ViewBag.tema"  width="640" height="500" border="2"></embed>
     <br/>
-    Comentarios: @ViewBag.comcont<br/>
-    <table border="1" width="650">
+    <b>Cantidad de Comentarios: </b>@ViewBag.comcont<br/>
+    <div id="cuerpo">
     @foreach (var v in ViewBag.comentario)
     {
-        DateTime dt=@v.Fecha;
-       
+        DateTime dt = @v.Fecha;
+        Guid usuario = (Guid)v.Id_Us;
         string fec = dt.ToString().Substring(0, 8);
         
-        <tr><td>
-            Publicado en fecha: @fec<br/>
+        <div id="recuadro">
+        @foreach (var w in @ViewBag.listauser)
+        {
+            if (w.Id_User == usuario)
+            {
+                <div id="usuario">
+                            Publicado por:<br/>
+                            <a href="/Account/Perfil2/@w.Id_User"><img src="/@w.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
+                            Karma: @w.Karma
+                        
+                </div>
+            }
+
+        }
+
+            <b>Publicado en fecha: @fec</b><br/>
             @v.Texto
-        </td></tr>
+                    <div id="limpiador">
+                        </div>
+        </div>
     }
-    </table>
+    
     @if (Request.IsAuthenticated)
     {
-        using (Html.BeginForm("Comentar","Contenido"))
+        using (Html.BeginForm("Comentar", "Contenido"))
         { 
             <text>Deja tu comentario:<br/></text>
             <input type="hidden" name="id" value="@ViewBag.id"/>
@@ -73,4 +97,7 @@
             <input type="submit" value="Comentar"/>
         }
     }
-</div>  
+    </div>
+    </div>
+    </div>
+

@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Administracion de Usuarios";
+}
+<fieldset style="padding:1px;">
+    <legend>@Html.ActionLink("Contenidos","Contenidos","Admin")|@Html.ActionLink("Categorias","Categorias","Admin")|@Html.ActionLink("Comentarios","Comentarios","Admin")|@Html.ActionLink("Usuarios","Usuarios","Admin")</legend>
+<h2 align="center">Administracion de usuarios</h2>
+    <fieldset>
+        <legend>Lista de usuarios</legend>
+        <table border ="1" id="itsthetable">
+            <tr><th>E-mail</th><th>Avatar</th><th>Nickname</th><th>Karma</th><th>Estado</th><th>Acciones</th><th>Disminuir karma</th></tr>
+            @foreach (var i in ViewBag.userlist)
+            { 
+                <tr><td><a href="/Account/perfil2/@i.Id_user">@i.mail</a></td>
+                    <td><a href="/Account/perfil2/@i.Id_user"><img src="/@i.avatar" alt="imagen de usuario" width="100" height="50"/></a></td>
+                    <td><a href="/Account/perfil2/@i.Id_user">@i.nickname</a></td>
+                    <td>@i.karma</td>
+                    
+                        @{
+                            int est=i.estado;
+                            if (est == 1)
+                            { 
+                                <text><td>Activo</td>
+                                       <td>@Html.ActionLink("Bannear", "Bannear", new { id=i.Id_user})
+                                       @if (!Roles.IsUserInRole(i.username, "Administrador"))
+                                       { 
+                                            <text>|@Html.ActionLink("Asignar como administrador", "Mas_rol", new { id=i.username }) </text>
+                                       }
+                                       else { 
+                                            <text>|@Html.ActionLink("Quitar rol de administrador", "Menos_rol", new { id=i.username }) </text>
+                                       }
+                                       </td>
+                                       <td>
+                                       @using (Html.BeginForm("Disminuir_karma", "Admin")) { 
+                                           <input type="hidden" name="userid" value="@i.Id_user"/>
+                                            @Html.TextBox("cantidad")<br />
+                                            <input type="submit" value="disminuir"/>
+                                       
+                                       }
+                                       
+                                       </td>
+                                </text>
+                            }
+                            else
+                            { 
+                                <text><td>Inactivo</td>
+                                    <td>@Html.ActionLink("Activar", "Activar", new { id=i.Id_user})</td>
+                                    <td></td>
+                                </text>
+                            }
+                        }
+                    
+                </tr>
+            }
+        </table>
+    </fieldset>
+</fieldset>

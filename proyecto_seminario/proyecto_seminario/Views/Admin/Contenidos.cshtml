@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Administracion de Contenidos";
+}
+<fieldset style="padding:1px;">
+    <legend>@Html.ActionLink("Contenidos","Contenidos","Admin")|@Html.ActionLink("Categorias","Categorias","Admin")|@Html.ActionLink("Comentarios","Comentarios","Admin")|@Html.ActionLink("Usuarios","Usuarios","Admin")</legend>
+<h2 align="center">Administracion de contenidos</h2>
+<fieldset>
+    <legend>Contenidos por revisar</legend>
+    <table border="1" id="itsthetable">
+        <tr><th>Titulo</th><th>Tipo de publicacion</th><th>Fecha publicacion</th></tr>
+        @foreach (var i in ViewBag.lista)
+        {
+            string titulo = i.Titulo;
+            <tr>
+            @if (i.Tipo == "Libro")
+            {
+                <td>@Html.ActionLink(titulo, "../Contenido/RevisionLibro", new { id = i.IdContenido })</td>
+            }
+            else
+            { 
+                <td>@Html.ActionLink(titulo, "../Contenido/RevisionPublicacion", new { id = i.IdContenido })</td>
+            }
+            <td>@i.Tipo</td>
+            @{
+            string x = i.Fecha_publicacion.ToString();
+                x = x.Substring(0, 10);
+                
+            }
+            <td>@x</td>
+            </tr>
+        }
+    </table>
+</fieldset>
+</fieldset>

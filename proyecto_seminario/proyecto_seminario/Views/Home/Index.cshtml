@@ -1,65 +1,72 @@
 ﻿
 @{
+    
     ViewBag.Title = "Pagina principal";
 }
-
-
-              				
-				<div id="cuerpo">
-                   
-					<h1 align ="center">Libros mas recientes</h1>
-					<hr/>
-                   @foreach (var item in @ViewBag.con)
-                   {
-                       
-                       
-                            string x = item.Titulo;
-                            int y = item.IdContenido;
-                            string aux = "../Contenido/VistaLibro/" + y;
-                            int cont= 0;
-                            Guid idus = Guid.Empty;
-                            foreach (var j in ViewBag.contenido) {
-                                if (j.IdContenido == y) {
-                                    idus = j.Id_User;
+<div id="cuerpo">
+    <h1 align ="center">Libros mas recientes</h1>
+    
+	<hr/>
+    @foreach (var item in @ViewBag.con)
+    {
+        
+        string x = item.Titulo;
+        int y = item.IdContenido;
+        string aux = "../Contenido/VistaLibro/" + y;
+        int cont= 0;
+        Guid idus = Guid.Empty;
+        foreach (var j in ViewBag.contenido) 
+        {
+            if (j.IdContenido == y) {
+                 idus = j.Id_User;
+            }
+        }
+        
+        <div id="recuadro">
+            <div id="usuario">
+                <b>Publicado por:</b><br/>
+                <a href="Account/Perfil2/@idus"><img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
+                <b>Karma:</b> @item.Karma
+            </div>
+            @Html.ActionLink(x, "../Contenido/VistaLibro", new { id = y })
+            <br/>
+            <div id="mas_info">
+            <b>Categorias:</b><br/>
+                           
+                            @foreach (var v in ViewBag.miscat)
+                            {
+                                int idcont = v.IdContenido;
+                                if (idcont == y)
+                                {
+                                   <text> @v.Nombre<br/></text>
                                 }
                             }
-                        
-                    <div id="recuadro">
-                        <div id="usuario">
-                            Publicado por:<br/>
-                            <a href="Account/Perfil2/@idus"><img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
-                            Karma: @item.Karma
-                        
-                        </div>
-                        
-                        @Html.ActionLink(x, "../Contenido/VistaLibro", new { id = y })
-                        <br/>
-                        <div id="mas_info">
-                            Me gusta:@foreach(var v in @ViewBag.Gusta){
-                                       
-                                          if (v.IdPub == y)
-                                          {
-                                              cont++;
-                                                @v.cantidad
-                                          }
-                                          
-                                     }
-                                     @if (cont == 0)
-                                      { 
-                                            @cont
-                                      }
-                        </div>
-                            <ul class="cosa">
-						        <li> <div id="imagen">
-                                    <a href="@aux"><img src="@item.Portada" alt="imagen" width="80" height="110"/></a>
-                        </div></li>
-                        </ul>
-						@item.Descripcion
-						<div id="limpiador">
-                        </div>
-                        </div>
-					<hr/>
-                   } 
+                           
+                <b>Me gusta:</b>
+                @foreach(var v in @ViewBag.Gusta)
+                {
+                    if (v.IdPub == y)
+                    {
+                        cont++;
+                        @v.cantidad
+                    }
+                 }
+                 @if (cont == 0)
+                 { 
+                     @cont
+                 }
+             </div>
+             <ul class="cosa">
+	             <li> <div id="imagen">
+                 <a href="@aux"><img src="@item.Portada" alt="imagen" width="80" height="110"/></a>
+                </div></li>
+             </ul>
+			 @item.Descripcion
+			 <div id="limpiador">
+             </div>
+          </div>
+		  <hr/>
+       } 
                   <h1 align="center">Articulos mas recientes</h1>
                   @foreach (var item in @ViewBag.art)
                   { 
@@ -79,15 +86,15 @@
                         
                      <div id="recuadro">
                          <div id="usuario">
-                             Publicado por:<br/>
+                             <b>Publicado por:</b><br/>
                              <a href="Account/Perfil2/@idus"><img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
-                             Karma: @item.Karma
+                             <b>Karma:</b> @item.Karma
                          </div>
                         
                          @Html.ActionLink(x, "../Contenido/DetallePublicacion", new { id = y })
                          <br/>
                          <div id="mas_info">
-                            Categorias:<br/>
+                            <b>Categorias:</b><br/>
                             
                             @foreach (var v in ViewBag.miscat)
                             {
@@ -98,7 +105,7 @@
                                 }
                             }
                             
-                            Me gusta: @foreach (var v in @ViewBag.Gusta)
+                            <b>Me gusta:</b> @foreach (var v in @ViewBag.Gusta)
                                       {
                                          
                                           if (v.IdPub == y)
@@ -139,15 +146,15 @@
                         
                      <div id="recuadro">
                          <div id="usuario">
-                             Publicado por:<br/>
+                             <b>Publicado por:</b><br/>
                              <a href="Account/Perfil2/@idus"><img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
-                             Karma: @item.Karma
+                             <b>Karma:</b> @item.Karma
                          </div>
                          
                          @Html.ActionLink(x, "../Contenido/DetallePublicacion", new { id = y })
                          <br/>
                          <div id="mas_info">
-                            Categorias:<br/>
+                            <b>Categorias:</b><br/>
                            
                             @foreach (var v in ViewBag.miscat)
                             {
@@ -158,7 +165,7 @@
                                 }
                             }
                             
-                            Me gusta: 
+                            <b>Me gusta: </b>
                             @foreach (var v in @ViewBag.Gusta)
                             {
                                 
@@ -200,14 +207,14 @@
                          
                          <div id="recuadro">
                          <div id="usuario">
-                             Publicado por:<br/>
+                             <b>Publicado por:</b><br/>
                              <a href="Account/Perfil2/@idus"><img src="@item.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
-                             Karma: @item.Karma
+                             <b>Karma:</b> @item.Karma
                          </div>
                          @Html.ActionLink(x, "../Contenido/DetallePublicacion", new { id = y })
                          <br/>
                          <div id="mas_info">
-                            Categorias:<br/>
+                            <b>Categorias:</b><br/>
                            
                             @foreach (var v in ViewBag.miscat)
                             {
@@ -218,7 +225,7 @@
                                 }
                             }
                            
-                            Me gusta: @foreach (var v in @ViewBag.Gusta)
+                            <b>Me gusta:</b> @foreach (var v in @ViewBag.Gusta)
                                       {
                                           
                                           if (v.IdPub == y)
@@ -264,15 +271,14 @@
 					<h2 class="titlat">Categoria</h2>
 					<div id="otras" class="cuerpolateral">
 					<ul>
-					@foreach (var i in @ViewBag.catego)
-     {
+					@foreach (var i in @ViewBag.catego){
 
-         string cad = i.Nombre;
+                        string cad = i.Nombre;
                             
                         <li>    @Html.ActionLink(cad, "Index", new { id = @i.Id_cat })</li>
          
                             
-     }
+                      }
                      <li>@Html.ActionLink("Todos", "Index", new { id = 0 })</li>
 					</ul>
 					</div> 

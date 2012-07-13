@@ -23,19 +23,56 @@
     int i = v.IdContenido;
     <div id="cuerpo">
     <div id="recuadro">
-        @if (v.Tipo == "Libro")
-        {
+      <div id="usuario">
+                <b>Publicado por:</b><br/>
+                <a href="#"><img src="/@v.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
+                <b>Karma:</b> @v.Karma
+            </div>
         @Html.ActionLink(xx, "../Contenido/VistaLibro", new { id = i })
-        }
-        else
-        { 
-            @Html.ActionLink(xx, "../Contenido/DetallePublicacion", new { id = i })
-        }
+  
         <br/>
-        @Html.Raw(@aux)
+        
+        <div id="mas_info">
+            <b>Tipo</b> Libro<br />
+        </div>
+        <ul class="cosa">
+	             <li> <div id="imagen">
+                 <a href="../Contenido/VistaLibro/@i"><img src="@v.Portada" alt="imagen" width="80" height="110"/></a>
+                </div></li>
+             </ul>
+             @Html.Raw(@aux)
+        <div id="limpiador">
+             </div>
     </div>
     </div>
     
 }
 
-           
+@foreach(var v in @ViewBag.lista2){
+    string xx = v.Titulo;
+    string x=ViewBag.dato;
+    string y="<span style='background-color: #ff6600;'>"+x+"</span>";
+    string aux = v.Descripcion;
+    aux = aux.Replace(x, y);
+    int i = v.IdContenido;
+    <div id="cuerpo">
+    <div id="recuadro">
+      <div id="usuario">
+                <b>Publicado por:</b><br/>
+                <a href="#"><img src="/@v.Avatar" alt="Avatar de usuario" width="100" height="50"/></a><br/>
+                <b>Karma:</b> @v.Karma
+            </div>
+        @Html.ActionLink(xx, "../Contenido/DetallePublicacion", new { id = i })
+  
+        <br/>
+        <div id="mas_info">
+            <b>Tipo</b> @v.Tipo<br />
+        </div>
+        @Html.Raw(@aux)
+
+        <div id="limpiador">
+             </div>
+    </div>
+    </div>
+    
+}           

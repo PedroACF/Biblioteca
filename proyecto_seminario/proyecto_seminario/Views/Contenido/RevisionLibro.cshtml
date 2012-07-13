@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "RevisionLibro";
+}
+
+<h2 align="center">@ViewBag.titulo</h2>
+<div id="user">
+    Publicado por:<br/>
+    <a href="/Account/perfil2/@ViewBag.userid"><img src="../@ViewBag.avatar" alt="avatar de usuario" width="160" height="70"/></a><br/>
+    Karma: @ViewBag.karma<br/>
+    <a href="/Contenido/Bueno/@ViewBag.id"><img src="/contenidos/bien.jpg" alt="bueno" width="120"/></a>
+    @using (Html.BeginForm("Observar","Contenido")) { 
+        <h3>@Html.Label("Observaciones")</h3>
+        <input type="hidden" name="idcont" value="@ViewBag.id" />
+        @Html.TextArea("observacion", new { columns="18"})<br />
+        <input type="submit" value="enviar revision"/>
+    }
+</div>
+<div id="cuerpo" style="border: solid 1px; width : 640px;">
+<div id="valor">
+   
+    <table>
+        <tr><td>Descripcion: </td><td>@ViewBag.desc</td></tr>
+        <tr><td>Autor: </td><td>@ViewBag.autor</td></tr>
+        <tr><td>Año:</td><td>@ViewBag.fecha</td></tr>
+    </table>
+    <br/>
+    <embed src="@ViewBag.tema"  width="630" height="500" border="2"></embed>
+    <br/>
+
+ 
+</div>  
+
+</div>

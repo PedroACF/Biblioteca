@@ -7,7 +7,7 @@
         
                     <div class="Cuenta">
                     <img src="/@ViewBag.Avatar" alt="imagen" width="150"/>
-                    <table>
+                    <table id="itsthetable">
                 
                         <tr><td>Username:</td><td>@ViewBag.nick </td></tr>
                         <tr><td>Apellido:</td><td>@ViewBag.apellido </td></tr>
@@ -18,16 +18,29 @@
                         <tr><td>Karma:</td><td>@ViewBag.karma</td></tr>
                         
                     </table>
-                    </div>        
+                    </div>   
+                    @if (Roles.IsUserInRole("Administrador"))
+                    {
+                        <h4>Sanciones</h4>
+                        @Html.ActionLink("Bannear", "Bannear", new { id = ViewBag.iduser })<br /><br/>
+                        using (Html.BeginForm("Disminuir_karma", "Account"))
+                        { 
+                              <input type="hidden" name="userid" value="@ViewBag.iduser"/>
+                              @Html.TextBox("cantidad")
+                              <input type="submit" value="disminuir karma"/>
+                                       
+                        }
+                    }     
             </fieldset>
             Karma total aportada por Comentarios:
             @ViewBag.coment 
             <fieldset>
                 <legend>Mis publicaciones</legend>
-                <table>
-                <tr><th>| Titulo </th><th>|Tipo </th><th>|K. por publicar </th><th>|K. Me Gusta </th><th>|Karma Total|</th></tr>
+                <table border="1" id="itsthetable" align="center">
+                <tr><th> Titulo </th><th>Tipo </th><th>K. por publicar </th><th>K. Me Gusta </th><th>Karma Total</th></tr>
                 <tr><td></td><td></td><td></td><td></td><td></td></tr>
-                @foreach(var v in @ViewBag.publicacion){
+                @foreach (var v in @ViewBag.publicacion)
+                {
                     int i = v.IdContenido;
                     string tit = v.Titulo;
                     int cont = 0;
@@ -43,11 +56,12 @@
                     {
                         ruta = "../Contenido/VistaLibro";
                     }
-                    else {
+                    else
+                    {
                         ruta = "../Contenido/DetallePublicacion";
                     }
                     
-                    <tr><td>@Html.ActionLink(tit, ruta, new {id=i })</td><td>@v.Tipo</td><td>???</td><td>@cont</td><td>@cont</td></tr>
+                    <tr><td>@Html.ActionLink(tit, ruta, new { id = i })</td><td>@v.Tipo</td><td>???</td><td>@cont</td><td>@cont</td></tr>
                 }
                 </table>
             

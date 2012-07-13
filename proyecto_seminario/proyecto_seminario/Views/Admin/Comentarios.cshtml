@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Administracion de comentarios:";
+}
+<fieldset style="padding:1px;">
+    <legend>@Html.ActionLink("Contenidos","Contenidos","Admin")|@Html.ActionLink("Categorias","Categorias","Admin")|@Html.ActionLink("Comentarios","Comentarios","Admin")|@Html.ActionLink("Usuarios","Usuarios","Admin")</legend>
+        
+
+<h2 align="center">Administracion de comentarios</h2>
+<div id="lateral">
+<h2 class="titlat">Buscar comentarios</h2>
+@using (Html.BeginForm())
+{ 
+        @Html.Label("Busca comentarios con palabras ofensivas:")<br/>
+        <input type="hidden" name="clave" value="@ViewBag.palabra"/>
+        <input type="text" name="ofensivo"/><input type="submit" value="Buscar comentarios"/>
+}    
+<h2 class="titlat">@Html.ActionLink("Eliminar todos", "Eliminar_comentario", new { id = 0, clave = @ViewBag.palabra })</h2>
+<h2 class="titlat">Palabras ofensivas</h2>
+@using (Html.BeginForm("Insertar_palabra","Admin"))
+{ 
+    @Html.Label("Palabra nueva:")<br />
+    <input type="text" name="palabra" /><br/>
+    <input type="submit" value="Insertar al diccionario" />
+}
+</div>
+
+<div id="cuerpo">
+
+<fieldset>
+    <legend>Comentarios:</legend>
+@foreach (var i in ViewBag.lista)
+{
+    Guid idus = @i.Id_Us;
+            <div id="recuadro">
+                <div id="usuario">
+                    <a href="../Account/Perfil2/@idus"><img src="/@i.Avatar" alt="imagen" width="100" height="50"/></a>
+                    Karma: @i.Karma
+                </div>
+                @{
+                    string x = i.Texto;
+                    
+                }
+                @x
+                <div id="mas_info">
+                    @Html.ActionLink("Eliminar", "Eliminar_comentario",  new { id=i.Id_Com,clave=@ViewBag.palabra})<br />
+                    
+                </div>
+                <div id="limpiador"></div>
+            </div> 
+            
+        }
+    </fieldset>
+    <fieldset>
+    <legend>Diccionario de palabras ofensivas</legend>
+        
+        <table border="1" id="itsthetable">
+            <tr><th>Palabra</th><th>Coincidencias encontradas</th><th>Accion</th></tr>
+            @foreach (var v in @ViewBag.ofensivo) {
+                string pal = v.palabra;
+                int cont=0;
+                foreach (var w in ViewBag.cantidad) { 
+                    string x=w.Texto;
+                    if (x.Contains(v.palabra))
+                    {
+                        cont++;
+                    }
+                }
+                <tr><td>@Html.ActionLink(pal,"Comentarios",new {id=v.palabra})</td><td>@cont</td><td>@Html.ActionLink("Eliminar comentarios", "Eliminar_varios", new {id=v.palabra })</td></tr>
+            }
+        </table>
+    </fieldset>
+</div>
+</fieldset>

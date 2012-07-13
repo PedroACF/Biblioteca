@@ -86,6 +86,14 @@ namespace proyecto_seminario.Models
 
     }
 
-   
+    public class detalle_perfil {
+        public Guid Id_user { set; get; }
+        public string username { set; get; }
+        public string avatar { set; get; }
+        public string nickname { set; get; }
+        public string mail { set; get; }
+        public int karma { set; get; }
+        public int estado { set; get; }
+    }
  
 }

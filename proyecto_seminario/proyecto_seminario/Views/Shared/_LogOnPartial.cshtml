@@ -1,6 +1,9 @@
 ﻿@if(Request.IsAuthenticated) {
     <text>
     @Html.ActionLink("Mi cuenta","Perfil","Account")|@Html.ActionLink("Libro", "SubirLibro", "Contenido")|@Html.ActionLink("Articulo", "../Contenido/Publicar", new { id = "Articulo" })|@Html.ActionLink("Tutorial", "../Contenido/Publicar", new { id = "Tutorial" })|@Html.ActionLink("Curso", "../Contenido/Publicar", new { id = "Curso" })|@Html.ActionLink("Log Off", "LogOff", "Account")</text>
+    if (Roles.IsUserInRole("Administrador")) { 
+        @Html.ActionLink("Administrar","index","Admin")
+    }
 }
 else
 {

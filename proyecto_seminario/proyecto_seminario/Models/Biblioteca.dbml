@@ -36,24 +36,10 @@
       <Column Name="IsAnonymous" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="LastActivityDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="aspnet_User_aspnet_Membership" Member="aspnet_Membership" ThisKey="UserId" OtherKey="UserId" Type="aspnet_Membership" Cardinality="One" />
-      <Association Name="aspnet_User_Perfil_Usuario" Member="Perfil_Usuarios" ThisKey="UserId" OtherKey="Id_User" Type="Perfil_Usuario" />
       <Association Name="aspnet_User_Comentario" Member="Comentarios" ThisKey="UserId" OtherKey="Id_Us" Type="Comentario" />
       <Association Name="aspnet_User_Gusta" Member="Gustas" ThisKey="UserId" OtherKey="Id_Us" Type="Gusta" />
+      <Association Name="aspnet_User_Perfil_Usuario" Member="Perfil_Usuarios" ThisKey="UserId" OtherKey="Id_User" Type="Perfil_Usuario" />
       <Association Name="aspnet_User_Contenido" Member="Contenidos" ThisKey="UserId" OtherKey="Id_User" Type="Contenido" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Perfil_Usuario" Member="Perfil_Usuarios">
-    <Type Name="Perfil_Usuario">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nickname" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="Nombre" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="Apellidos" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
-      <Column Name="Intereses" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
-      <Column Name="Avatar" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="Ubicacion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="Id_User" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="Karma" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Association Name="aspnet_User_Perfil_Usuario" Member="aspnet_User" ThisKey="Id_User" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Comentario" Member="Comentarios">
@@ -121,6 +107,48 @@
       <Association Name="Contenido_Rel_Categoria_Contenido" Member="Contenido" ThisKey="IdContenido" OtherKey="IdContenido" Type="Contenido" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Cant_Gusta" Member="Cant_Gustas">
+    <Type Name="Cant_Gusta">
+      <Column Name="cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdPub" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ListaCatego" Member="ListaCategos">
+    <Type Name="ListaCatego">
+      <Column Name="IdContenido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vista_comentario" Member="vista_comentarios">
+    <Type Name="vista_comentario">
+      <Column Name="Id_Com" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Texto" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Id_Us" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Avatar" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Karma" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.diccionario" Member="diccionarios">
+    <Type Name="diccionario">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="palabra" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Perfil_Usuario" Member="Perfil_Usuarios">
+    <Type Name="Perfil_Usuario">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nickname" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Apellidos" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="Intereses" Type="System.String" DbType="VarChar(120)" CanBeNull="true" />
+      <Column Name="Avatar" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Ubicacion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Id_User" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="Karma" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="estado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="aspnet_User_Perfil_Usuario" Member="aspnet_User" ThisKey="Id_User" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Contenido" Member="Contenidos">
     <Type Name="Contenido">
       <Column Name="IdContenido" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -129,18 +157,14 @@
       <Column Name="Descripcion" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="Tipo" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
       <Column Name="Fecha_publicacion" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="estado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="observaciones" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
       <Association Name="Contenido_Comentario" Member="Comentarios" ThisKey="IdContenido" OtherKey="Id_Cont" Type="Comentario" />
       <Association Name="Contenido_Gusta" Member="Gustas" ThisKey="IdContenido" OtherKey="IdPub" Type="Gusta" />
       <Association Name="Contenido_Libro" Member="Libro" ThisKey="IdContenido" OtherKey="IdPublicacion" Type="Libro" Cardinality="One" />
       <Association Name="Contenido_Publicacion" Member="Publicacion" ThisKey="IdContenido" OtherKey="IdPublicacion" Type="Publicacion" Cardinality="One" />
       <Association Name="Contenido_Rel_Categoria_Contenido" Member="Rel_Categoria_Contenidos" ThisKey="IdContenido" OtherKey="IdContenido" Type="Rel_Categoria_Contenido" />
       <Association Name="aspnet_User_Contenido" Member="aspnet_User" ThisKey="Id_User" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Cant_Gusta" Member="Cant_Gustas">
-    <Type Name="Cant_Gusta">
-      <Column Name="cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="IdPub" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.VistaGeneralLibro" Member="VistaGeneralLibros">
@@ -152,6 +176,7 @@
       <Column Name="Avatar" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="Nickname" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
       <Column Name="Karma" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="estado" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.VistaGeneralPublicacion" Member="VistaGeneralPublicacions">
@@ -163,12 +188,7 @@
       <Column Name="Nickname" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
       <Column Name="Karma" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="Tipo" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ListaCatego" Member="ListaCategos">
-    <Type Name="ListaCatego">
-      <Column Name="IdContenido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="estado" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

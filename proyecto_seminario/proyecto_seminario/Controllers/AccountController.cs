@@ -25,6 +25,7 @@ namespace proyecto_seminario.Controllers
 
         //
         // POST: /Account/LogOn
+        [Authorize(Roles="Miembro")]
         public ActionResult Perfil() {
             BibliotecaDataContext db = new BibliotecaDataContext();
             Guid id =  (Guid)Session["userid"];
@@ -52,7 +53,8 @@ namespace proyecto_seminario.Controllers
             ViewBag.karma = fila.ToArray()[0].karma;
             ViewBag.coment = (from p in db.Comentarios where p.Id_Us == id select p).Count();
             ViewBag.gusta = (from p in db.Cant_Gustas select p).ToList();
-            ViewBag.publicacion=(from p in db.Contenidos where p.Id_User==id select p).ToList();
+            ViewBag.publicacion=(from p in db.Contenidos where p.Id_User==id && p.estado==1 select p).ToList();
+            ViewBag.publicacion2 = (from p in db.Contenidos where p.Id_User == id && p.estado != 1 select p).ToList();
             return View();
         }
         public ActionResult Perfil2(Guid id)
@@ -74,7 +76,7 @@ namespace proyecto_seminario.Controllers
                            ubicacion = f2.Ubicacion,
                            karma = f2.Karma
                        };
-
+            ViewBag.iduser = id;
             ViewBag.Avatar = fila.ToArray()[0].avatar;
             ViewBag.nick = fila.ToArray()[0].nick;
             ViewBag.apellido = fila.ToArray()[0].apellido;
@@ -88,6 +90,7 @@ namespace proyecto_seminario.Controllers
             ViewBag.publicacion = (from p in db.Contenidos where p.Id_User == id select p).ToList();
             return View();
         }
+        [Authorize(Roles="Miembro")]
         public ActionResult EditarPerfil(){
             //            Username:	
             //Apellido:	
@@ -97,7 +100,7 @@ namespace proyecto_seminario.Controllers
             //Ubicacion:
             return View();
         }
-        [Authorize]
+        [Authorize(Roles = "Miembro")]
         [HttpPost]
         public ActionResult EditarPerfil(Perfil modelo,HttpPostedFileBase avatar) {
             if (ModelState.IsValid)
@@ -248,11 +251,12 @@ namespace proyecto_seminario.Controllers
                 MembershipCreateStatus createStatus;
                 model.UserName = "User" + (Membership.GetAllUsers().Count + 1);
                 Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
-               
-
+                
+                BibliotecaDataContext db= new BibliotecaDataContext();
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                   
+                    Session["userid"]=(from i in db.aspnet_Users where i.UserName==model.UserName select i).ToArray()[0].UserId;
+                    Roles.AddUserToRole(model.UserName,"Miembro");
                     FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Home");
                 }
@@ -372,7 +376,29 @@ namespace proyecto_seminario.Controllers
 
             return img;
         }
-        
+        [Authorize(Roles="Administrador")]
+         public ActionResult Disminuir_karma(FormCollection f)
+         {
+             Guid id = new Guid(f["userid"]);
+
+             int i = 0;
+             if (f["cantidad"] != null && f["cantidad"] != "")
+                 i = Convert.ToInt32(f["cantidad"]);
+             BibliotecaDataContext db = new BibliotecaDataContext();
+             Perfil_Usuario pu = db.Perfil_Usuarios.Single(u => u.Id_User == id);
+             pu.Karma = pu.Karma - i;
+             db.SubmitChanges();
+             return Redirect("/Account/Perfil/"+id);
+         }
+        [Authorize(Roles = "Administrador")]
+         public ActionResult Bannear(Guid id)
+         {
+             BibliotecaDataContext db = new BibliotecaDataContext();
+             Perfil_Usuario pu = db.Perfil_Usuarios.Single(u => u.Id_User == id);
+             pu.estado = 0;
+             db.SubmitChanges();
+             return Redirect("/Account/Perfil/" + id);
+         }
         #region Status Codes
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {

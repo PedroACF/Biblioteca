@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "EdicionLibro";
+}
+
+<h2>Edicion Libro</h2>
+<fieldset>
+    <legend>Subir libro</legend>
+    Observaciones: @ViewBag.observaciones<br />
+    <form enctype="multipart/form-data" method="post" action="@Url.Action("EdicionLibro")">
+
+    <table>
+        <tr><td>Titulo:</td><td><input type="text" name="titulo" value="@ViewBag.titulo"/></td></tr>
+        <tr><td>Portada:</td><td><input type="file" name="portada" accept="image/jpg"/></td></tr>
+        <tr><td>Contenido:</td><td><input type="file" name="contenido"/></td></tr>
+        <tr><td>Descripcion:</td><td>@Html.TextArea("descripcion", new { value = ViewBag.descripcion})</td></tr>
+               
+        <tr><td>Categoria:</td><td>
+     
+        @Html.TextBox("categoria")
+        
+
+        </td></tr>
+        <tr><td>Autor:</td><td><input type="text" name="autor" value="@ViewBag.autor"/></td></tr>
+        <tr><td>Año de Publicacion:</td><td>@Html.TextBox("anio")</td></tr>
+    </table>
+    <input type="hidden" value="@ViewBag.id" name="ID"/>
+    <input type="submit" value="Siguiente"/>
+
+    </form>
+</fieldset>

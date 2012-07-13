@@ -6,10 +6,11 @@
 
 
 <fieldset>
-    <legend>Subir libro</legend>
+    <H2>Subir libro</h2>
+
     <form enctype="multipart/form-data" method="post" action="@Url.Action("SubirLibro")">
  
-
+    <b>
     <table>
         <tr><td>Titulo:</td><td>@Html.TextBoxFor(m => m.titulo)</td></tr>
         <tr><td>Portada:</td><td><input type="file" name="portada" accept="image/jpg"/></td></tr>
@@ -18,13 +19,14 @@
                
         <tr><td>Categoria:</td><td>
      
-        @Html.TextBoxFor(m=>m.categoria)
+        @Html.TextBox("categoria")
         
 
         </td></tr>
         <tr><td>Autor:</td><td>@Html.TextBoxFor(m => m.autor)</td></tr>
         <tr><td>Publicacion:</td><td>@Html.TextBoxFor(m => m.aniopublicacion)</td></tr>
     </table>
+    </b>
     <input type="submit" value="Siguiente"/>
 
     </form>

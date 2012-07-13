@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Administracion de Categorias";
+}
+<fieldset style="padding:1px;">
+    <legend>@Html.ActionLink("Contenidos","Contenidos","Admin")|@Html.ActionLink("Categorias","Categorias","Admin")|@Html.ActionLink("Comentarios","Comentarios","Admin")|@Html.ActionLink("Usuarios","Usuarios","Admin")</legend>
+<h2 align="center">Administracion de categorias</h2>
+<table id="itsthetable" border ="1" align="center">
+    <tr><th>Categoria</th><th>Eliminar</th><th>Reemplazar</th></tr>
+    @foreach (var v in ViewBag.categos) { 
+        <tr><td>@v.Nombre</td><td>@Html.ActionLink("Eliminar", "Eliminar_categorias", new {  id = v.Id_cat} )</td>
+        <td>
+            @using (Html.BeginForm("Actualizar_categoria","Admin"))
+            { 
+                @Html.Label("Por:")
+                <input type="text"  name="nuevo"/>
+                <input type="hidden" value="@v.Id_cat" name="id"/>
+                <input type="submit" value="Reemplazar"/>
+            }
+        
+        </td>
+        </tr>
+    }
+</table>
+</fieldset>
